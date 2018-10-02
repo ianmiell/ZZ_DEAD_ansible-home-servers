@@ -336,15 +336,6 @@ RUN sed -i 's/hosts:.*NOTFOUND.*/hosts: files dns/' /etc/nsswitch.conf
 ENSURE_LINE ['filename=/etc/security/limits.conf','line=nexus - nofile 65536','pattern=nexus - nofile.*']
 
 # Power/nosleep management
-IF_NOT RUN grep HandleLidSwitch=ignore /etc/systemd/logind.conf
-	RUN sed -i 's/HandleLidSwitch.*/HandleLidSwitch=ignore' /etc/systemd/logind.conf || true
-	RUN systemctl daemon-reload && systemctl restart systemd-logind.service
-ENDIF
-IF_NOT RUN grep HandleLidSwitch=ignore /etc/systemd/logind.conf
-	RUN echo HandleLidSwitch=ignore >> /etc/systemd/logind.conf
-	RUN systemctl daemon-reload && systemctl restart systemd-logind.service
-ENDIF
-
 IF_NOT RUN grep IgnoreLid=true /etc/UPower/UPower.conf
 	RUN sed -i 's/IgnoreLid=.*/IgnoreLid=true' /etc/UPower/UPower.conf || true
 	RUN systemctl daemon-reload && systemctl restart upower.service
@@ -370,11 +361,6 @@ IF_NOT RUN command chef
 	RUN rm -f chefdk.deb
 ENDIF
 
-# apt cleanup
-RUN apt-file update >/dev/null 2>&1
-RUN apt autoremove -y >/dev/null 2>&1
-RUN apt clean >/dev/null 2>&1
-
 # Sysstat
 RUN sed -i 's/^ENABLED.*/ENABLED="true"/' /etc/default/sysstat
 
@@ -386,33 +372,9 @@ IF_NOT RUN grep -- '-a exit,always -F arch=b32 -S execve' /etc/audit/audit.rules
 	RUN echo '-a exit,always -F arch=b32 -S execve' >> /etc/audit/audit.rules
 ENDIF
 
-# Photon - site exploiter
-IF_NOT FILE_EXISTS /space/git/Photon
-	RUN cd /space/git
-	RUN git clone https://github.com/s0md3v/Photon
-	RUN cd Photon
-	RUN pip install .
-ENDIF
-
-IF_NOT FILE_EXISTS /space/git/Quark
-	RUN cd /space/git
-	RUN git clone https://github.com/s0md3v/Quark
-ENDIF
-
-
-
 ################################################################################
 # Log me in as imiell
 USER imiell
-# If it's not been done before, check out my dotfiles and set it up
-IF_NOT FILE_EXISTS /home/imiell/.dotfiles
-	RUN cd /home/imiell
-	RUN git clone --depth=1 https://github.com/ianmiell/dotfiles ~imiell/.dotfiles
-	RUN cd .dotfiles
-	RUN ./script/bootstrap
-	EXPECT_MULTI ['What is your github author name=Ian Miell','What is your github author email=ian.miell@gmail.com','verwrite all=O']
-ENDIF
-
 # Generate an ssh key
 IF_NOT FILE_EXISTS /home/imiell/.ssh/id_rsa.pub
 	RUN ssh-keygen
@@ -425,19 +387,11 @@ IF_NOT FILE_EXISTS /space/jenkins_cache/shutit-openshift-cluster
 	RUN git clone --depth=1 https://github.com/ianmiell/shutit-openshift-cluster
 	RUN cd -
 ENDIF
-# Belt and braces - ensure it's up to date.
-IF FILE_EXISTS /space/git/shutit-home-server
-	RUN cd /space/git/shutit-home-server
-	RUN git pull
-	RUN cd -
-ENDIF
 IF_NOT FILE_EXISTS /home/imiell/.aws
 	RUN mkdir -p /home/imiell/.aws
 	RUN chown 0600 /home/imiell/.aws
 ENDIF
 LOGOUT
-# ensure vim is the default for root
-RUN echo 3 | update-alternatives --config editor
 RUN chown -R imiell: /space
 ################################################################################
 
@@ -450,6 +404,5 @@ ENDIF
 
 # Allow to get src
 RUN sed -i 's/# deb-src/deb-src/' /etc/sources.list
-RUN apt-get update -y
 
 RUN echo Now ssh-copy-id around, git clone ssh://imiell@meirionconsulting.com:/var/cache/git/work.git and re-run
