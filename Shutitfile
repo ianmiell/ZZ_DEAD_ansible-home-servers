@@ -238,7 +238,6 @@ ENDIF
 ################################################################################
 # Log me in as imiell
 USER imiell
-# If it's not been done before, check out my dotfiles and set it up
 # Generate an ssh key
 IF_NOT FILE_EXISTS /home/imiell/.ssh/id_rsa.pub
 	RUN ssh-keygen
@@ -251,19 +250,11 @@ IF_NOT FILE_EXISTS /space/jenkins_cache/shutit-openshift-cluster
 	RUN git clone --depth=1 https://github.com/ianmiell/shutit-openshift-cluster
 	RUN cd -
 ENDIF
-# Belt and braces - ensure it's up to date.
-IF FILE_EXISTS /space/git/shutit-home-server
-	RUN cd /space/git/shutit-home-server
-	RUN git pull
-	RUN cd -
-ENDIF
 IF_NOT FILE_EXISTS /home/imiell/.aws
 	RUN mkdir -p /home/imiell/.aws
 	RUN chown 0600 /home/imiell/.aws
 ENDIF
 LOGOUT
-# ensure vim is the default for root
-RUN echo 3 | update-alternatives --config editor
 RUN chown -R imiell: /space
 
 

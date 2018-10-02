@@ -1,8 +1,14 @@
 ---
 
-- name: applly common configuration to all nodes
+- name: apply common configuration to all nodes
   hosts: all
   remote_user: root
-
   roles:
     - common
+
+
+- name: apply common configuration to jenkinshosts
+  hosts: jenkinshosts
+  remote_user: root
+  roles:
+    - jenkinshosts
