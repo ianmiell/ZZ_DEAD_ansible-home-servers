@@ -31,16 +31,12 @@ IF FILE_EXISTS /space/git/work
 	ENDIF
 ENDIF
 
-RUN usermod -aG sudo imiell
-
 # Add a nexus user
 IF_NOT RUN id -u nexus
 	RUN useradd nexus
 ENDIF
 
 # Install required packages
-# Required for some dep issues with python3
-INSTALL sosreport
 # Required to diagnose crashes
 INSTALL crash
 # Required for gems
@@ -140,7 +136,6 @@ INSTALL virtinst
 # VIRTUALIZATION END
 # For authoring
 # NTP
-INSTALL ntp
 RUN timedatectl set-ntp on
 
 INSTALL sysdig
