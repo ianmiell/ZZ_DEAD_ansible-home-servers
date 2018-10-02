@@ -2,17 +2,50 @@
 # This playbook contains common plays that will be run on all nodes.
 
 - name: Install ntp
-  yum: name=ntp state=present
+  apt: name=ntp state=present
   tags: ntp
 
-- name: Configure ntp file
-  template: src=ntp.conf.j2 dest=/etc/ntp.conf
-  tags: ntp
-  notify: restart ntp
+# Required for some dep issues with python3
+- name: install sosreport
+  apt: name=sosreport state=present
+  tags: sosreport
 
-- name: Start the ntp service
-  service: name=ntpd state=started enabled=yes
-  tags: ntp
+# Adding the groups to an existing user doesn't delete the groups already assigned.
+- name: Add the user 'imiell' with a specific uid and groups
+  user:
+    name: imiell
+    comment: Ian Miell
+    groups: sudo,docker
+
+# Sysdig installation
+- name: Add sysdig apt key
+  apt_key:
+    url: https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public
+
+- name: Get sysdig sources list
+  get_url:
+    url: https://s3.amazonaws.com/download.draios.com/stable/deb/draios.list
+    dest: /etc/apt/sources.list.d/draios.list
+    mode: 0640
+
+- name: Install falco
+  apt: name=falco state=present
+  tags: sysdig, falco
+
+# Dotfiles
+- git:
+    repo: 'https://github.com/ianmiell/dotfiles.git'
+    dest: /home/imiell/.dotfiles
+
+
+#- name: Configure ntp file
+#  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+#  tags: ntp
+#  notify: restart ntp
+#
+#- name: Start the ntp service
+#  service: name=ntpd state=started enabled=yes
+#  tags: ntp
 
 # TODO: what is this?
 #- name: test to see if selinux is running
