@@ -12,3 +12,10 @@
   remote_user: root
   roles:
     - jenkinshosts
+
+
+- name: apply common configuration to desktops
+  hosts: desktop
+  remote_user: root
+  roles:
+    - desktop
