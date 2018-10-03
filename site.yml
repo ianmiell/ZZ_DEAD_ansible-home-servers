@@ -7,11 +7,11 @@
     - common
 
 
-- name: apply common configuration to jenkinshosts
-  hosts: jenkinshosts
+- name: apply common configuration to jenkins hosts
+  hosts: jenkins
   remote_user: root
   roles:
-    - jenkinshosts
+    - jenkins
 
 
 - name: apply common configuration to desktops
@@ -19,3 +19,10 @@
   remote_user: root
   roles:
     - desktop
+
+
+- name: apply common configuration to jira hosts
+  hosts: jira
+  remote_user: root
+  roles:
+    - jira

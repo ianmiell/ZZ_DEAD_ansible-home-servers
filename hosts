@@ -1,14 +1,15 @@
-[jumpoffhost]
+[jumpoff]
 basquiat
 
+[jira]
 
-[jenkinshosts]
+[jenkins]
 dali
 cage
 caravaggio
 
 
-[generalhosts]
+[general]
 welles
 rothko
 

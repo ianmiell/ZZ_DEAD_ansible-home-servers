@@ -22,62 +22,21 @@ IF_NOT RUN id -u nexus
 	RUN useradd nexus
 ENDIF
 
-# Install required packages
-# Required to diagnose crashes
-INSTALL crash
-# Required for gems
-INSTALL libtool
-INSTALL autoconf
-# gems requirements done
-INSTALL maven
 
-INSTALL postgresql libreoffice socat etherwake openssh-server run-one apache2 vim python-pip meld tmux openjdk-8-jre alien brasero moreutils git git-extras npm asciidoc asciidoctor awscli python3-pip jq fslint pylint apt-file shellcheck sqlite3 golang-go gnuplot ubuntu-desktop ubuntu-gnome-desktop ioping sysstat fdupes html2text software-properties-common curl apt-transport-https ca-certificates pandoc htop nmap tasksel php qemu qemu-kvm libvirt-bin virtinst btrfs-tools ruby-dev sysdig
-# For sec standards
-INSTALL auditd
-# X disk usage analyser
-INSTALL xdiskusage
-# ncurses disk usage analyser
-INSTALL ncdu
+INSTALL postgresql libreoffice socat etherwake openssh-server run-one apache2 vim python-pip meld tmux openjdk-8-jre alien brasero moreutils git git-extras npm asciidoc asciidoctor awscli python3-pip jq fslint pylint apt-file shellcheck sqlite3 golang-go gnuplot ubuntu-desktop ubuntu-gnome-desktop ioping sysstat fdupes html2text software-properties-common curl apt-transport-https ca-certificates pandoc htop nmap tasksel php qemu qemu-kvm libvirt-bin virtinst btrfs-tools
 # For Jenkins
 INSTALL groovy
-# IPTables state viewer
-INSTALL iptstate
-# fail2ban - ban IPs of failing ssh queries
-INSTALL fail2ban
-# Text-only browser
-INSTALL links
 # Tasksel - see notes/ubuntu
 INSTALL libapache2-mod-php
 RUN timedatectl set-ntp on
-# latest dns utils, including drill
-INSTALL ldnsutils libldns2
 # Install docker
 INSTALL docker.io
-
-# Let's encrypt: https://certbot.eff.org/#ubuntuxenial-apache
-IF_NOT RUN apt-cache policy | grep certbot
-	RUN add-apt-repository -y ppa:certbot/certbot
-	RUN apt -y update >/dev/null 2>&1
-	INSTALL python-certbot-apache
-ENDIF
-
-IF_NOT RUN apt-cache policy | grep jonathonf.vim
-	RUN add-apt-repository -y ppa:jonathonf/vim
-	RUN apt -y update >/dev/null 2>&1
-	INSTALL vim
-ENDIF
 
 # Handbrake - DESKTOP
 IF_NOT RUN apt-cache policy | grep stebbins
 	RUN add-apt-repository -y ppa:stebbins/handbrake-releases || true
 	RUN apt -y update >/dev/null 2>&1 || true
 	RUN apt -y install handbrake-cli >/dev/null 2>&1|| true
-ENDIF
-
-# grub-customizer - ALL
-IF_NOT RUN apt-cache policy | grep grub-customizer
-	RUN add-apt-repository -y ppa:danielrichter2007/grub-customizer
-	INSTALL grub-customizer
 ENDIF
 
 # Google Chrome - Desktop

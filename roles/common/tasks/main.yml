@@ -17,6 +17,21 @@
     comment: Ian Miell
     groups: sudo,docker
 
+# Let's encrypt
+- name: Add let's encrypt repo
+  apt_key:
+    ppa: certbot/certbot
+- name: Install python-certbot-apache
+  apt: name=python-certbot-apache state=present
+
+# GRUB customizer
+- name: Add grub-customizer repo
+  apt_key:
+    ppa: danielrickter2007/grub-customizer
+- name: Install grub-customizer
+  apt: name=grub-customizer state=present
+
+
 # Sysdig installation
 - name: Add sysdig apt key
   apt_key:
@@ -28,6 +43,9 @@
     dest: /etc/apt/sources.list.d/draios.list
     mode: 0640
 
+- name: Install sysdig
+  apt: name=sysdig state=present
+  tags: sysdig
 - name: Install falco
   apt: name=falco state=present
   tags: sysdig, falco
@@ -38,13 +56,56 @@
     dest: /home/imiell/.dotfiles
 
 # Power management
-# TODO: trigger restart systemd-logind
 - lineinfile:
     path: /etc/systemd/logind.conf
     regexp: '^HandleLidSwitch.*'
     line: 'HandleLidSwitch=ignore'
     state: present
   notify: restart systemd-logind
+
+# To diagnose crashes
+- name: Install crash
+  apt: name=crash state=present
+
+# For gems
+- name: Install rubyd-ev
+  apt: name=ruby-dev state=present
+- name: Install libtool
+  apt: name=libtool state=present
+- name: Install autoconf
+  apt: name=autoconf state=present
+
+# Maven
+- name: Install maven
+  apt: name=maven state=present
+
+# Sec standards
+- name: Install auditd
+  apt: name=auditd state=present
+- name: Install fail2ban
+  apt: name=fail2ban state=present
+
+# Disk usage analysis
+- name: Install xdiskusage
+  apt: name=xdiskusage state=present
+- name: Install ncdu
+  apt: name=ncdu state=present
+
+# IPTables state viewer
+- name: Install iptstate
+  apt: name=iptstate state=present
+
+# Text-only browser
+- name: Install links
+  apt: name=links state=present
+
+# DNS
+- name: Install ldnsutils
+  apt: name=ldnsutils state=present
+- name: Install libldns2
+  apt: name=libldns2 state=present
+
+
 
 
 
