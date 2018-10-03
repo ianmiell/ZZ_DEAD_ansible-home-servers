@@ -1,1 +1,17 @@
 ---
+
+# Handbrake
+- name: Add handbrake
+  apt_repository:
+    url: ppa:stebbins/handbrake-releases
+- name: Install handbrake-cli
+  apt: name=handbrake-cli state=present
+
+# Google chrome
+- name: Add google chrome apt key
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+- name: Get chrome sources
+  shell: "echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list"
+- name: install google-chrome-stable
+  apt: name=google-chrome-stable state=present

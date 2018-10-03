@@ -32,21 +32,6 @@ RUN timedatectl set-ntp on
 # Install docker
 INSTALL docker.io
 
-# Handbrake - DESKTOP
-IF_NOT RUN apt-cache policy | grep stebbins
-	RUN add-apt-repository -y ppa:stebbins/handbrake-releases || true
-	RUN apt -y update >/dev/null 2>&1 || true
-	RUN apt -y install handbrake-cli >/dev/null 2>&1|| true
-ENDIF
-
-# Google Chrome - Desktop
-IF_NOT RUN google-chrome --version
-	RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-	RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
-	RUN apt update -y >/dev/null 2>&1
-	INSTALL google-chrome-stable
-ENDIF
-
 # Terraform
 IF_NOT RUN terraform version  | awk '{print $NF}' | head -1 | grep v0.11.3
 	RUN wget https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip
@@ -54,15 +39,6 @@ IF_NOT RUN terraform version  | awk '{print $NF}' | head -1 | grep v0.11.3
 	RUN mv terraform /usr/local/bin
 	RUN rm -f terraform*
 ENDIF
-
-# Chef
-IF_NOT RUN command chef
-	RUN wget -qO- https://packages.chef.io/files/stable/chefdk/2.3.4/ubuntu/16.04/chefdk_2.3.4-1_amd64.deb > chefdk.deb
-	RUN dpkg -i chefdk.deb
-	RUN gem install kitchen
-	RUN rm -f chefdk.deb
-ENDIF
-
 
 # pip upgrade
 IF_NOT RUN pip list | grep requests
@@ -98,13 +74,6 @@ IF_NOT FILE_EXISTS /usr/local/bin/youtube-dl
 	RUN chmod a+x /usr/local/bin/youtube-dl
 	RUN hash -r
 ENDIF
-
-# Set up local storage
-RUN mkdir -p /media/storage_{1,2}
-# Create space folder and chown it to imiell
-RUN mkdir -p /space/git
-RUN mkdir -p /space/jenkins_cache
-RUN chown -R imiell: /space
 
 # Gem installs
 # for inspec tests
