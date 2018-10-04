@@ -1,14 +1,9 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-- name: Install ntp
-  apt: name=ntp state=present
-  tags: ntp
 
-# Required for some dep issues with python3
-- name: install sosreport
-  apt: name=sosreport state=present
-  tags: sosreport
+- name: Install docker
+  apt: name=docker.io state=present
 
 # Adding the groups to an existing user doesn't delete the groups already assigned.
 - name: Add the user 'imiell' with a specific uid and groups
@@ -16,6 +11,7 @@
     name: imiell
     comment: Ian Miell
     groups: sudo,docker
+
 
 # Let's encrypt
 - name: Add let's encrypt repo
@@ -50,11 +46,6 @@
   apt: name=falco state=present
   tags: sysdig, falco
 
-# Dotfiles
-- git:
-    repo: 'https://github.com/ianmiell/dotfiles.git'
-    dest: /home/imiell/.dotfiles
-
 # Power management
 - lineinfile:
     path: /etc/systemd/logind.conf
@@ -74,6 +65,15 @@
   apt: name=libtool state=present
 - name: Install autoconf
   apt: name=autoconf state=present
+
+- name: Install ntp
+  apt: name=ntp state=present
+  tags: ntp
+
+# Required for some dep issues with python3
+- name: install sosreport
+  apt: name=sosreport state=present
+  tags: sosreport
 
 # Maven
 - name: Install maven
@@ -104,6 +104,15 @@
   apt: name=ldnsutils state=present
 - name: Install libldns2
   apt: name=libldns2 state=present
+
+
+# As user imiell
+# Dotfiles
+- git:
+    repo: 'https://github.com/ianmiell/dotfiles.git'
+    dest: /home/imiell/.dotfiles
+    become: yes
+    become_user: imiell
 
 
 
