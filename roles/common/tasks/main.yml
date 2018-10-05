@@ -1,9 +1,16 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
+- apt: name=apt-transport-https state=present
+- apt: name=ca-certificates state=present
+- apt: name=curl state=present
+- apt: name=software-properties-common state=present
 
-- name: Install docker
-  apt: name=docker.io state=present
+- apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- shell: 'add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
+- apt: name=docker-ce state=present
 
 # Adding the groups to an existing user doesn't delete the groups already assigned.
 - name: Add the user 'imiell' with a specific uid and groups
@@ -191,8 +198,6 @@
 - apt: name=php state=present
 - apt: name=qemu state=present
 - apt: name=qemu-kvm state=present
-- apt: name= state=present
-- apt: name= state=present
 
 - git:
     repo: 'https://github.com/ianmiell/dotfiles.git'
