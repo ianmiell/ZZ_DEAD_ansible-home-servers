@@ -7,6 +7,9 @@ basquiat
 [jenkinsserver]
 basquiat
 
+[plexserver]
+dali
+
 [jenkins]
 dali
 cage
