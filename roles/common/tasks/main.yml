@@ -86,25 +86,39 @@
   apt: name=fail2ban state=present
 
 # Disk usage analysis
-- name: Install xdiskusage
-  apt: name=xdiskusage state=present
-- name: Install ncdu
-  apt: name=ncdu state=present
-
+- apt: name=xdiskusage state=present
+- apt: name=ncdu state=present
 # IPTables state viewer
-- name: Install iptstate
-  apt: name=iptstate state=present
-
+- apt: name=iptstate state=present
 # Text-only browser
-- name: Install links
-  apt: name=links state=present
-
+- apt: name=links state=present
 # DNS
-- name: Install ldnsutils
-  apt: name=ldnsutils state=present
-- name: Install libldns2
-  apt: name=libldns2 state=present
+- apt: name=ldnsutils state=present
+- apt: name=libldns2 state=present
 
+- apt: name=bpython state=present
+- apt: name=vim state=present
+- apt: name=run-one state=present
+- apt: name=python-pip state=present
+- apt: name=socat state=present
+postgresql libreoffice socat etherwake openssh-server apache2 python-pip meld tmux openjdk-8-jre alien brasero moreutils git git-extras npm asciidoc asciidoctor awscli python3-pip jq fslint pylint apt-file shellcheck sqlite3 golang-go gnuplot ubuntu-desktop ubuntu-gnome-desktop ioping sysstat fdupes html2text software-properties-common curl apt-transport-https ca-certificates pandoc htop nmap tasksel php qemu qemu-kvm libvirt-bin virtinst btrfs-tools
+
+
+
+#- name: Configure ntp file
+#  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+#  tags: ntp
+#  notify: restart ntp
+#
+#- name: Start the ntp service
+#  service: name=ntpd state=started enabled=yes
+#  tags: ntp
+
+# TODO: what is this?
+#- name: test to see if selinux is running
+#  command: getenforce
+#  register: sestatus
+#  changed_when: false
 
 # As user imiell
 # Dotfiles
