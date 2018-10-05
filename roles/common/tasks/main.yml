@@ -15,15 +15,17 @@
 
 # Let's encrypt
 - name: Add let's encrypt repo
-  apt_key:
-    ppa: certbot/certbot
+  apt_repository:
+    repo:  ppa:certbot/certbot
+    state: present
 - name: Install python-certbot-apache
   apt: name=python-certbot-apache state=present
 
 # GRUB customizer
 - name: Add grub-customizer repo
-  apt_key:
-    ppa: danielrickter2007/grub-customizer
+  apt_repository:
+    repo: ppa:danielrichter2007/grub-customizer
+    state: present
 - name: Install grub-customizer
   apt: name=grub-customizer state=present
 
@@ -46,6 +48,19 @@
   apt: name=falco state=present
   tags: sysdig, falco
 
+# youtube-dl
+- name: Get youtube-dl
+  get_url:
+    url: https://yt-dl.org/latest/youtube-dl
+    dest: /usr/local/bin/youtube-dl
+    mode: 0755
+
+
+# Dotfiles
+- git:
+    repo: 'https://github.com/ianmiell/dotfiles.git'
+    dest: /home/imiell/.dotfiles
+
 # Power management
 - lineinfile:
     path: /etc/systemd/logind.conf
@@ -53,6 +68,51 @@
     line: 'HandleLidSwitch=ignore'
     state: present
   notify: restart systemd-logind
+
+# Set up local storage                                                                                                                                                         
+- name: Creates media directory 1
+  file:
+    path: /media/storage_1
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+    recurse: yes
+- name: Creates media directory 2
+  file:
+    path: /media/storage_2
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+    recurse: yes
+- name: Creates space folder
+  file:
+    path: /space
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+    recurse: yes
+- name: Creates git folder
+  file:
+    path: /space/git
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+    recurse: yes
+- name: Creates jenkins cache folder
+  file:
+    path: /space/jenkins_cache
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+    recurse: yes
+
+
+
 
 # To diagnose crashes
 - name: Install crash

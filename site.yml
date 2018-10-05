@@ -1,27 +1,27 @@
 ---
 
-- name: apply common configuration to all nodes
+- name: Apply common configuration to all nodes
   hosts: all
   remote_user: root
   roles:
     - common
 
 
-- name: apply common configuration to jenkins hosts
+- name: Apply common configuration to jenkins hosts
   hosts: jenkins
   remote_user: root
   roles:
     - jenkins
 
 
-- name: apply common configuration to desktops
+- name: Apply common configuration to desktops
   hosts: desktop
   remote_user: root
   roles:
     - desktop
 
 
-- name: apply common configuration to jira hosts
+- name: Apply common configuration to jira hosts
   hosts: jira
   remote_user: root
   roles:

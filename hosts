@@ -2,14 +2,13 @@
 basquiat
 
 [jira]
+basquiat
 
 [jenkins]
 dali
 cage
 caravaggio
 
-
-[general]
-welles
+[desktop]
 rothko
-
+welles
