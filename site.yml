@@ -14,7 +14,14 @@
     - jenkins
 
 
-- name: Apply common configuration to desktops
+- name: apply common configuration to jenkinsserver hosts
+  hosts: jenkins
+  remote_user: root
+  roles:
+    - jenkinsserver
+
+
+- name: apply common configuration to desktops
   hosts: desktop
   remote_user: root
   roles:

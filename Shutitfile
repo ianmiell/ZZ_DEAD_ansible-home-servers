@@ -22,8 +22,6 @@ IF_NOT RUN id -u nexus
 	RUN useradd nexus
 ENDIF
 
-
-INSTALL postgresql libreoffice socat etherwake openssh-server run-one apache2 vim python-pip meld tmux openjdk-8-jre alien brasero moreutils git git-extras npm asciidoc asciidoctor awscli python3-pip jq fslint pylint apt-file shellcheck sqlite3 golang-go gnuplot ubuntu-desktop ubuntu-gnome-desktop ioping sysstat fdupes html2text software-properties-common curl apt-transport-https ca-certificates pandoc htop nmap tasksel php qemu qemu-kvm libvirt-bin virtinst btrfs-tools
 # For Jenkins
 INSTALL groovy
 # Tasksel - see notes/ubuntu
