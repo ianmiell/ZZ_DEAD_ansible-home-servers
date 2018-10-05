@@ -126,69 +126,77 @@
 - name: Install autoconf
   apt: name=autoconf state=present
 
-- name: Install ntp
-  apt: name=ntp state=present
-  tags: ntp
 
 # Required for some dep issues with python3
-- name: install sosreport
-  apt: name=sosreport state=present
-  tags: sosreport
+- apt: name=sosreport state=present
 
 # Maven
-- name: Install maven
-  apt: name=maven state=present
+- apt: name=maven state=present
 
 # Sec standards
-- name: Install auditd
-  apt: name=auditd state=present
-- name: Install fail2ban
-  apt: name=fail2ban state=present
+- apt: name=auditd state=present
+- apt: name=fail2ban state=present
 
 # Disk usage analysis
-- name: Install xdiskusage
-  apt: name=xdiskusage state=present
-- name: Install ncdu
-  apt: name=ncdu state=present
-
+- apt: name=xdiskusage state=present
+- apt: name=ncdu state=present
 # IPTables state viewer
-- name: Install iptstate
-  apt: name=iptstate state=present
-
+- apt: name=iptstate state=present
 # Text-only browser
-- name: Install links
-  apt: name=links state=present
-
+- apt: name=links state=present
 # DNS
-- name: Install ldnsutils
-  apt: name=ldnsutils state=present
-- name: Install libldns2
-  apt: name=libldns2 state=present
+- apt: name=ldnsutils state=present
+- apt: name=libldns2 state=present
 
+- apt: name=bpython state=present
+- apt: name=vim state=present
+- apt: name=run-one state=present
+- apt: name=python-pip state=present
+- apt: name=socat state=present
+- apt: name=etherwake state=present
+- apt: name=openssh-server state=present
+- apt: name=apache2 state=present
+- apt: name=tmux state=present
+- apt: name=alien state=present
+- apt: name=git state=present
+- apt: name=git-extras state=present
+- apt: name=ntp state=present
+- apt: name=moreutils state=present
+- apt: name=npm state=present
+- apt: name=openjdk-8-jre state=present
+- apt: name=asciidoc state=present
+- apt: name=asciidoctor state=present
+- apt: name=awscli state=present
+- apt: name=python3-pip state=present
+- apt: name=jq state=present
+- apt: name=fslint state=present
+- apt: name=pylint state=present
+- apt: name=apt-file state=present
+- apt: name=shellcheck state=present
+- apt: name=sqlite3 state=present
+- apt: name=golang-go state=present
+- apt: name=gnuplot state=present
+- apt: name=ioping state=present
+- apt: name=sysstat state=present
+- apt: name=fdupes state=present
+- apt: name=html2text state=present
+- apt: name=software-properties-common state=present
+- apt: name=curl state=present
+- apt: name=apt-transport-https state=present
+- apt: name=ca-certificates state=present
+- apt: name=pandoc state=present
+- apt: name=htop state=present
+- apt: name=nmap state=present
+- apt: name=tasksel state=present
+- apt: name=php state=present
+- apt: name=qemu state=present
+- apt: name=qemu-kvm state=present
+- apt: name= state=present
+- apt: name= state=present
 
-# As user imiell
-# Dotfiles
 - git:
     repo: 'https://github.com/ianmiell/dotfiles.git'
     dest: /home/imiell/.dotfiles
     become: yes
     become_user: imiell
 
-
-
-
-
-#- name: Configure ntp file
-#  template: src=ntp.conf.j2 dest=/etc/ntp.conf
-#  tags: ntp
-#  notify: restart ntp
-#
-#- name: Start the ntp service
-#  service: name=ntpd state=started enabled=yes
-#  tags: ntp
-
-# TODO: what is this?
-#- name: test to see if selinux is running
-#  command: getenforce
-#  register: sestatus
-#  changed_when: false
