@@ -275,3 +275,9 @@ ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
   notify: dnsmasq restart
 
 
+
+# gems: https://docs.ansible.com/ansible/latest/modules/gem_module.html?highlight=gem
+# Installs latest available version of rake.
+#- gem:
+#    name: rake
+#    state: latest
