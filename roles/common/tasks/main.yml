@@ -120,6 +120,15 @@
 
 
 
+# TODO: Fix for dnsmasq
+#root@rothko:~# cat /etc/systemd/system/dnmasq.service.d/resolved-fix.conf
+#[Unit]
+#After=systemd-resolved.service
+#
+#[Service]
+#ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
+#ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
+
 
 # To diagnose crashes
 - name: Install crash
