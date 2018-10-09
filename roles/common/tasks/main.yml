@@ -62,11 +62,15 @@
 - name: Generate /etc/ssh/ RSA host key
   command: ssh-keygen -q -t rsa -f /home/imiell/.ssh/id_rsa -C "" -N "" creates=/etc/ssh/ssh_host_rsa_key
   tags: work
+  become: yes
+  become_user: imiell
 
 - git:
     repo: ssh://meirionconsulting.com/var/cache/git/work
     dest: /space/git/work
   tags: work
+  become: yes
+  become_user: imiell
 
 
 # Let's encrypt
@@ -111,16 +115,6 @@
     dest: /usr/local/bin/youtube-dl
     mode: 0755
 
-
-# Dotfiles
-- git:
-    repo: 'https://github.com/ianmiell/dotfiles.git'
-    dest: /home/imiell/.dotfiles
-
-# Dotfiles
-- git:
-    repo: 'https://github.com/ianmiell/dotfiles.git'
-    dest: /home/imiell/.dotfiles
 
 # Power management
 - lineinfile:
