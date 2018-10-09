@@ -250,8 +250,8 @@
     state: latest
 
 - pip:
-  name: shutit
-  state: latest
+    name: shutit
+    state: latest
 
 - pip:
     name: awsscout2
