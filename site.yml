@@ -1,5 +1,11 @@
 ---
 
+# No need to gather facts. See: https://medium.com/@abhijeet.kamble619/10-things-you-should-start-using-in-your-ansible-playbook-808daff76b65
+- hosts: all
+  gather_facts: False
+  any_errors_fatal: True
+  # gather_subset: network, ohai, facter, hardware, virtual
+
 - name: Apply common configuration to all nodes
   hosts: all
   remote_user: root
