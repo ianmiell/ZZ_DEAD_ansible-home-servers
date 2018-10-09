@@ -280,13 +280,15 @@
 - gem:
     name: inspec
     state: latest
+    pre_release: yes
+  tags: gem
 - gem:
     name: asciidoctor-pdf
     state: latest
     pre_release: yes
   tags: gem
 - gem:
-    name: asciidoctor-reveal-js
+    name: asciidoctor-revealjs
     state: latest
     pre_release: yes
   tags: gem

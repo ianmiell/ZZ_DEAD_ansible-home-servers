@@ -1,6 +1,6 @@
 ---
 
-apt: name=libapache2-mod-php state=present
+- apt: name=libapache2-mod-php state=present
 
 - apache2_module:
     state: present
