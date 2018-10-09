@@ -121,6 +121,7 @@
 
 
 # TODO: Fix for dnsmasq
+# https://unix.stackexchange.com/a/304798/93547
 # and trigger restart of dnsmasq
 #root@rothko:~# cat /etc/systemd/system/dnmasq.service.d/resolved-fix.conf
 #[Unit]
