@@ -1,0 +1,20 @@
+---
+
+apt: name=libapache2-mod-php state=present
+
+- apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - proxy
+    - proxy_http
+    - proxy_ajp
+    - proxy_balancer
+    - proxy_connect
+    - proxy_html
+    - proxy_wstunnel
+    - rewrite
+    - deflate
+    - headers
+    - php7.2
+
