@@ -261,9 +261,18 @@
 - apt: name=dnsmasq state=present
 
 # https://unix.stackexchange.com/a/304798/93547
-- name: dnsmasq fix
-  template: src=templates/etc/systemd/system/dnsmasq.service.d/resolved-fix.conf dest=/etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
-  notify: dnsmasq restart
+- name: ensure dnsmasq directory exists
+  file:
+    path: /etc/systemd/system/dnsmasq.service.d
+    recurse: yes
+    state: directory
+  tags: dnsmasq
+
+- template:
+    src: templates/etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
+    dest: /etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
+  notify: restart dnsmasq
+  tags: dnsmasq
 
 
 
