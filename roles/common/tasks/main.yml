@@ -227,35 +227,35 @@
 
 - pip:
   name: requests
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: coverage
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: python-twitter
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: setuptools
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: twine
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: butterfly
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: shutit
-  extra_args: --upgrade
+  state: latest
 
 - pip:
   name: awsscout2
-  extra_args: --upgrade
+  state: latest
 
 
 - apt: name=dnsmasq state=present
