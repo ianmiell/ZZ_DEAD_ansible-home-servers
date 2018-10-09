@@ -226,36 +226,36 @@
   become_user: imiell
 
 - pip:
-  name: requests
-  state: latest
+    name: requests
+    state: latest
 
 - pip:
-  name: coverage
-  state: latest
+    name: coverage
+    state: latest
 
 - pip:
-  name: python-twitter
-  state: latest
+    name: python-twitter
+    state: latest
 
 - pip:
-  name: setuptools
-  state: latest
+    name: setuptools
+    state: latest
 
 - pip:
-  name: twine
-  state: latest
+    name: twine
+    state: latest
 
 - pip:
-  name: butterfly
-  state: latest
+    name: butterfly
+    state: latest
 
 - pip:
   name: shutit
   state: latest
 
 - pip:
-  name: awsscout2
-  state: latest
+    name: awsscout2
+    state: latest
 
 
 - apt: name=dnsmasq state=present
@@ -268,14 +268,24 @@
 
 
 # gems: https://docs.ansible.com/ansible/latest/modules/gem_module.html?highlight=gem
-# Installs latest available version of rake.
-#- gem:
-#    name: rake
-#    state: latest
-#RUN gem install inspec
-#RUN gem install --pre asciidoctor-pdf
-#RUN gem install --pre asciidoctor-revealjs
-#RUN gem install coderay
-#RUN gem install pygments.rb
-#RUN gem install tilt
-#RUN gem install slim
+- gem:
+    name: inspec
+    state: latest
+- gem:
+    name: asciidoctor-pdf
+    state: latest
+- gem:
+    name: asciidoctor-reveal-js
+    state: latest
+- gem:
+    name: coderay
+    state: latest
+- gem:
+    name: pygments
+    state: latest
+- gem:
+    name: tilt
+    state: latest
+- gem:
+    name: slim
+    state: latest
