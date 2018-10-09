@@ -260,15 +260,18 @@
 
 - apt: name=dnsmasq state=present
 
-# TODO: Fix for dnsmasq
 # https://unix.stackexchange.com/a/304798/93547
-# and trigger restart of dnsmasq
-#root@rothko:~# cat /etc/systemd/system/dnmasq.service.d/resolved-fix.conf
-#[Unit]
-#After=systemd-resolved.service
-#
-#[Service]
-#ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
-#ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
+- name: dnsmasq fix
+  blockinfile:
+    dest: /etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
+    block: |
+[Unit]
+After=systemd-resolved.service
+
+[Service]
+ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
+ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
+    backup: no
+  notify: dnsmasq restart
 
 

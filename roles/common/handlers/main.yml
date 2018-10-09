@@ -6,3 +6,6 @@
 
 - name: restart upower
   service: name=upower state=restarted
+
+- name: restart dnsmasq
+  service: name=dnsmasq state=restarted
