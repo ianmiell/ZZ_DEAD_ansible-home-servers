@@ -283,9 +283,13 @@
 - gem:
     name: asciidoctor-pdf
     state: latest
+    pre_release: yes
+  tags: gem
 - gem:
     name: asciidoctor-reveal-js
     state: latest
+    pre_release: yes
+  tags: gem
 - gem:
     name: coderay
     state: latest
