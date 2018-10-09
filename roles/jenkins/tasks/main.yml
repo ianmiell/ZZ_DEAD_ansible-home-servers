@@ -1,4 +1,0 @@
----
-# This playbook contains common plays that will be run on all nodes.
-
-- apt: name=groovy state=present

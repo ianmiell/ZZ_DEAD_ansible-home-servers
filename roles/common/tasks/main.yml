@@ -153,7 +153,29 @@
 - apt: name=maven state=present
 
 # Sec standards
-- apt: name=auditd state=present
+- name: auditd install
+  apt: name=auditd state=present
+  tags: auditd
+
+- lineinfile:
+    path: /etc/audit/audit.rules
+    regexp: '-a exit,always -F arch=b64 -S execve'
+    line: '-a exit,always -F arch=b64 -S execve'
+    state: present
+  notify: restart auditd
+  tags: auditd
+
+- lineinfile:
+    path: /etc/audit/audit.rules
+    regexp: '-a exit,always -F arch=b32 -S execve'
+    line: '-a exit,always -F arch=b32 -S execve'
+    state: present
+  notify: restart auditd
+  tags: auditd
+
+                                                                                                              
+RUN cp /space/git/work/bin/imiell_audit.rules /etc/audit/rules.d 
+
 - apt: name=fail2ban state=present
 
 # Disk usage analysis
@@ -304,3 +326,20 @@
 - gem:
     name: slim
     state: latest
+
+
+- name: Install gtop
+  npm:
+    name: gtop
+    global: yes
+    state: present
+  tags: npm
+
+- name: Install mermaid
+  npm:
+    name: mermaid
+    global: yes
+    state: present
+  tags: npm
+
+
