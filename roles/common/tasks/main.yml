@@ -174,7 +174,7 @@
   tags: auditd
 
                                                                                                               
-RUN cp /space/git/work/bin/imiell_audit.rules /etc/audit/rules.d 
+#RUN cp /space/git/work/bin/imiell_audit.rules /etc/audit/rules.d 
 
 - apt: name=fail2ban state=present
 

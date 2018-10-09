@@ -13,10 +13,10 @@
     - common
 
 - name: Apply common configuration to jenkins hosts
-  hosts: jenkins
+  hosts: jenkinshosts
   remote_user: root
   roles:
-    - jenkins
+    - jenkinshosts
 
 - name: apply common configuration to jenkinsserver hosts
   hosts: jenkins
