@@ -262,16 +262,7 @@
 
 # https://unix.stackexchange.com/a/304798/93547
 - name: dnsmasq fix
-  blockinfile:
-    dest: /etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
-    block: |
-[Unit]
-After=systemd-resolved.service
-
-[Service]
-ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
-ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
-    backup: no
+  template: src=templates/etc/systemd/system/dnsmasq.service.d/resolved-fix.conf dest=/etc/systemd/system/dnsmasq.service.d/resolved-fix.conf
   notify: dnsmasq restart
 
 
