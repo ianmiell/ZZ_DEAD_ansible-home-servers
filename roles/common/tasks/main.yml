@@ -1,5 +1,43 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
+# Set up local storage
+- name: Creates media directory 1
+  file:
+    path: /media/storage_1
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+- name: Creates media directory 2
+  file:
+    path: /media/storage_2
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+- name: Creates space folder
+  file:
+    path: /space
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+- name: Creates git folder
+  file:
+    path: /space/git
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+- name: Creates jenkins cache folder
+  file:
+    path: /space/jenkins_cache
+    state: directory
+    owner: imiell
+    group: imiell
+    mode: 0775
+
+
 
 - apt: name=apt-transport-https state=present
 - apt: name=ca-certificates state=present
@@ -18,6 +56,17 @@
     name: imiell
     comment: Ian Miell
     groups: sudo,docker
+
+# TODO: ensure /space/git/ and work repo is there.
+
+- name: Generate /etc/ssh/ RSA host key
+  command: ssh-keygen -q -t rsa -f /home/imiell/.ssh/id_rsa -C "" -N "" creates=/etc/ssh/ssh_host_rsa_key
+  tags: work
+
+- git:
+    repo: ssh://meirionconsulting.com/var/cache/git/work
+    dest: /space/git/work
+  tags: work
 
 
 # Let's encrypt
@@ -88,49 +137,6 @@
     line: 'IgnoreLid=true'
     state: present
   notify: restart upower
-
-
-# Set up local storage                                                                                                                                                         
-- name: Creates media directory 1
-  file:
-    path: /media/storage_1
-    state: directory
-    owner: imiell
-    group: imiell
-    mode: 0775
-    recurse: yes
-- name: Creates media directory 2
-  file:
-    path: /media/storage_2
-    state: directory
-    owner: imiell
-    group: imiell
-    mode: 0775
-    recurse: yes
-- name: Creates space folder
-  file:
-    path: /space
-    state: directory
-    owner: imiell
-    group: imiell
-    mode: 0775
-    recurse: yes
-- name: Creates git folder
-  file:
-    path: /space/git
-    state: directory
-    owner: imiell
-    group: imiell
-    mode: 0775
-    recurse: yes
-- name: Creates jenkins cache folder
-  file:
-    path: /space/jenkins_cache
-    state: directory
-    owner: imiell
-    group: imiell
-    mode: 0775
-    recurse: yes
 
 
 # To diagnose crashes
