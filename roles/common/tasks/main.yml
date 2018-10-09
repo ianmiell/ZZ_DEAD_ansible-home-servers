@@ -272,3 +272,10 @@
 #- gem:
 #    name: rake
 #    state: latest
+#RUN gem install inspec
+#RUN gem install --pre asciidoctor-pdf
+#RUN gem install --pre asciidoctor-revealjs
+#RUN gem install coderay
+#RUN gem install pygments.rb
+#RUN gem install tilt
+#RUN gem install slim

@@ -6,13 +6,11 @@
   roles:
     - common
 
-
 - name: Apply common configuration to jenkins hosts
   hosts: jenkins
   remote_user: root
   roles:
     - jenkins
-
 
 - name: apply common configuration to jenkinsserver hosts
   hosts: jenkins
@@ -20,16 +18,20 @@
   roles:
     - jenkinsserver
 
-
 - name: apply common configuration to desktops
   hosts: desktop
   remote_user: root
   roles:
     - desktop
 
-
 - name: Apply common configuration to jira hosts
   hosts: jira
   remote_user: root
   roles:
     - jira
+
+- name: Apply common configuration to jumpoff hosts
+  hosts: jumpoff
+  remote_user: root
+  roles:
+    - jumpoff
