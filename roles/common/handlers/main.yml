@@ -1,2 +1,8 @@
 - name: restart systemd-logind
   service: name=systemd-logind state=restarted
+
+- name: restart sysstat
+  service: name=sysstat state=restarted
+
+- name: restart upower
+  service: name=upower state=restarted

@@ -68,6 +68,11 @@
     repo: 'https://github.com/ianmiell/dotfiles.git'
     dest: /home/imiell/.dotfiles
 
+# Dotfiles
+- git:
+    repo: 'https://github.com/ianmiell/dotfiles.git'
+    dest: /home/imiell/.dotfiles
+
 # Power management
 - lineinfile:
     path: /etc/systemd/logind.conf
@@ -75,6 +80,15 @@
     line: 'HandleLidSwitch=ignore'
     state: present
   notify: restart systemd-logind
+
+
+- lineinfile:
+    path: /etc/UPower/UPower.conf
+    regexp: 'IgnoreLid=.*'
+    line: 'IgnoreLid=true'
+    state: present
+  notify: restart upower
+
 
 # Set up local storage                                                                                                                                                         
 - name: Creates media directory 1
@@ -117,19 +131,6 @@
     group: imiell
     mode: 0775
     recurse: yes
-
-
-
-# TODO: Fix for dnsmasq
-# https://unix.stackexchange.com/a/304798/93547
-# and trigger restart of dnsmasq
-#root@rothko:~# cat /etc/systemd/system/dnmasq.service.d/resolved-fix.conf
-#[Unit]
-#After=systemd-resolved.service
-#
-#[Service]
-#ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
-#ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
 
 
 # To diagnose crashes
@@ -210,9 +211,64 @@
 - apt: name=qemu state=present
 - apt: name=qemu-kvm state=present
 
+- lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED=.*'
+    line: 'ENABLED=true'
+    state: present
+  notify: restart sysstat
+
+# Set up local storage                                                                                                                                                         
 - git:
     repo: 'https://github.com/ianmiell/dotfiles.git'
     dest: /home/imiell/.dotfiles
   become: yes
   become_user: imiell
+
+- pip:
+  name: requests
+  extra_args: --upgrade
+
+- pip:
+  name: coverage
+  extra_args: --upgrade
+
+- pip:
+  name: python-twitter
+  extra_args: --upgrade
+
+- pip:
+  name: setuptools
+  extra_args: --upgrade
+
+- pip:
+  name: twine
+  extra_args: --upgrade
+
+- pip:
+  name: butterfly
+  extra_args: --upgrade
+
+- pip:
+  name: shutit
+  extra_args: --upgrade
+
+- pip:
+  name: awsscout2
+  extra_args: --upgrade
+
+
+- apt: name=dnsmasq state=present
+
+# TODO: Fix for dnsmasq
+# https://unix.stackexchange.com/a/304798/93547
+# and trigger restart of dnsmasq
+#root@rothko:~# cat /etc/systemd/system/dnmasq.service.d/resolved-fix.conf
+#[Unit]
+#After=systemd-resolved.service
+#
+#[Service]
+#ExecStartPre=/usr/bin/systemctl stop systemd-resolved.service
+#ExecStartPost=/usr/bin/systemctl start systemd-resolved.service
+
 
