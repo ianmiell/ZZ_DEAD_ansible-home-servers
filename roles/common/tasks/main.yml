@@ -213,6 +213,6 @@
 - git:
     repo: 'https://github.com/ianmiell/dotfiles.git'
     dest: /home/imiell/.dotfiles
-    become: yes
-    become_user: imiell
+  become: yes
+  become_user: imiell
 
