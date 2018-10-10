@@ -1,0 +1,9 @@
+---
+
+- name: Creates media directory 1                                                                                                                                              
+  file:                                                                                                                                                                        
+    path: /var/jenkins
+    state: directory                                                                                                                                                           
+    owner: imiell                                                                                                                                                              
+    group: imiell                                                                                                                                                              
+    mode: 0775 
